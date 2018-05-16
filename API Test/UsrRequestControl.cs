@@ -11,6 +11,7 @@ using System.Collections;
 using API.Interface;
 using API.Business;
 using API.Model;
+using API_Test.Helper;
 
 namespace API_Test
 {
@@ -49,6 +50,12 @@ namespace API_Test
             webRequest.SaveRequest(requestModel);
 
             SaveNode?.Invoke(requestModel.Guid, requestModel.Title);
+        }
+
+        private void btnGloabalVariables_Click(object sender, EventArgs e)
+        {
+            FrmGlobalVariables globalVariables = new FrmGlobalVariables();
+            globalVariables.ShowDialog();
         }
 
         internal void UpdateForm(string name, Guid guid)
@@ -106,5 +113,7 @@ namespace API_Test
 
             return requestModel;
         }
+
+
     }
 }

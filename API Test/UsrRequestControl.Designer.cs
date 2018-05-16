@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UsrRequestControl));
             this.cmbRequestType = new System.Windows.Forms.ComboBox();
             this.txtRequestUrl = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -40,6 +41,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.txtTextName = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnGloabalVariables = new System.Windows.Forms.Button();
             this.btnSend = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.txtResult = new System.Windows.Forms.RichTextBox();
@@ -180,13 +182,25 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnGloabalVariables);
             this.panel1.Controls.Add(this.btnSend);
             this.panel1.Controls.Add(this.btnSave);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel1.Location = new System.Drawing.Point(115, 55);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(687, 24);
             this.panel1.TabIndex = 8;
+            // 
+            // btnGloabalVariables
+            // 
+            this.btnGloabalVariables.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnGloabalVariables.Image = ((System.Drawing.Image)(resources.GetObject("btnGloabalVariables.Image")));
+            this.btnGloabalVariables.Location = new System.Drawing.Point(496, 0);
+            this.btnGloabalVariables.Name = "btnGloabalVariables";
+            this.btnGloabalVariables.Size = new System.Drawing.Size(41, 24);
+            this.btnGloabalVariables.TabIndex = 10;
+            this.btnGloabalVariables.UseVisualStyleBackColor = true;
+            this.btnGloabalVariables.Click += new System.EventHandler(this.btnGloabalVariables_Click);
             // 
             // btnSend
             // 
@@ -254,5 +268,6 @@
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.RichTextBox txtResult;
+        private System.Windows.Forms.Button btnGloabalVariables;
     }
 }
