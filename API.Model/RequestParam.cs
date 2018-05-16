@@ -14,6 +14,15 @@ namespace API.Model
         public string RequestBody { get; set; }
         public string RequestType { get; set; }
         public string Url { get; set; }
-        public Dictionary<string,string> Parameters { get; set; }
+        public Dictionary<string, string> Parameters { get; set; }
+
+        public static void CopyObjectDetails(RequestParam source, RequestParam destination)
+        {
+            destination.Title = source.Title;
+            destination.RequestBody = source.RequestBody;
+            destination.RequestType = source.RequestType;
+            destination.Url = source.Url;
+            destination.Parameters = source.Parameters;
+        }
     }
 }

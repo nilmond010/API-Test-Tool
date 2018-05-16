@@ -18,7 +18,7 @@ namespace API_Test
     public partial class UsrRequestControl : UserControl
     {
         private readonly IWebRequest webRequest;
-        private readonly Guid Id;
+        private Guid Id;
 
         public Action<Guid, string> SaveNode;
 
@@ -47,7 +47,6 @@ namespace API_Test
             RequestParam requestModel = GetRquestModel();
 
             webRequest.SaveRequest(requestModel);
-
             SaveNode?.Invoke(requestModel.Guid, requestModel.Title);
         }
 

@@ -29,7 +29,7 @@ namespace API_Test
             SaveNodeToTree(Guid.NewGuid(), "Root");
 
             var tabPage = CreateRquestTabPage("Default");
-            var tabPageNew = new TabPage("+");
+            var tabPageNew = new TabPage("    +");
             tabPageNew.Name = "NewTab";
 
             tabControl.TabPages.AddRange(new TabPage[] { tabPage, tabPageNew });
@@ -68,7 +68,6 @@ namespace API_Test
             var usrRequestControl = new UsrRequestControl(webRequest, Guid.NewGuid());
             usrRequestControl.SaveNode += SaveNodeToTree;
             usrRequestControl.Dock = DockStyle.Fill;
-            tabPage.Controls.Add(usrRequestControl);
             tabPage.Controls.Add(usrRequestControl);
 
             return tabPage;
@@ -115,11 +114,35 @@ namespace API_Test
 
         private void SaveNodeToTree(Guid obj, string testName)
         {
-            var treeNode = new TreeNode();
-            treeNode.Text = testName;
+            var existingTreeNode = GetExistingNode(obj);
+            if (existingTreeNode == null)
+            {
+                existingTreeNode = new TreeNode();
+                existingTreeNode.Tag = obj;
+                treeViewTestData.Nodes.Add(existingTreeNode);
+            }
 
-            treeNode.Tag = obj;
-            treeViewTestData.Nodes.Add(treeNode);
+            existingTreeNode.Text = testName;
+        }
+
+        private TreeNode GetExistingNode(Guid obj)
+        {
+            TreeNode foundNode = null;
+            foreach (TreeNode treeNode in treeViewTestData.Nodes)
+            {
+                if (treeNode.Tag == null)
+                {
+                    continue;
+                }
+
+                if ((Guid)treeNode.Tag == obj)
+                {
+                    foundNode = treeNode;
+                    break;
+                }
+            }
+
+            return foundNode;
         }
     }
 }
