@@ -25,31 +25,42 @@ namespace API.Business
 
         public void SaveRequest(RequestParam requestModel)
         {
-            var existingRequest = GetSavedRequest(requestModel.Guid);
+            var allRequest = GetAllRequest()?.ToList();
+            var existingRequest = allRequest?.FirstOrDefault(node => node.Guid == requestModel.Guid);
+            allRequest = allRequest ?? new List<RequestParam> { requestModel };
 
-            if (existingRequest == null)
+            if (existingRequest != null)
             {
-                var json = JsonConvert.SerializeObject(new List<RequestParam> { requestModel });
-                File.AppendAllText(@"SavedTest.txt", json);
+                RequestParam.CopyObjectDetails(requestModel, existingRequest);
             }
-            else
-            {
 
-            }
+            var json = JsonConvert.SerializeObject(allRequest);
+            File.WriteAllText(fileName, json);
         }
 
         public RequestParam GetSavedRequest(Guid id)
         {
+            IEnumerable<RequestParam> collection = GetAllRequest();
+            return collection?.FirstOrDefault(node => node.Guid == id);
+        }
+
+        public IDictionary<Guid, string> GetAllNodes()
+        {
+            IEnumerable<RequestParam> collection = GetAllRequest();
+            return collection?.ToDictionary(node => node.Guid, node => node.Title);
+        }
+
+        private IEnumerable<RequestParam> GetAllRequest()
+        {
             string json = ReadFileContent();
 
+            IEnumerable<RequestParam> collection = null;
             if (!string.IsNullOrWhiteSpace(json))
             {
-                var collection = JsonConvert.DeserializeObject<IEnumerable<RequestParam>>(json);
-
-                return collection.FirstOrDefault(node => node.Guid == id);
+                collection = JsonConvert.DeserializeObject<IEnumerable<RequestParam>>(json);
             }
 
-            return null;
+            return collection;
         }
 
         private string ReadFileContent()
@@ -58,19 +69,6 @@ namespace API.Business
                 return File.ReadAllText(fileName);
 
             return "";
-        }
-
-        public IDictionary<Guid, string> GetAllNodes()
-        {
-            string json = ReadFileContent();
-            if (!string.IsNullOrWhiteSpace(json))
-            {
-                var collection = JsonConvert.DeserializeObject<IEnumerable<RequestParam>>(json);
-
-                return collection.ToDictionary(node => node.Guid, node => node.Title);
-            }
-
-            return null;
         }
     }
 }
